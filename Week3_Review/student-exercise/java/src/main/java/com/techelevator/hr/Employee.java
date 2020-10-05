@@ -1,8 +1,11 @@
 package com.techelevator.hr;
 
+import com.techelevator.Billable;
 import com.techelevator.Person;
 
-public class Employee extends Person {
+import java.util.Map;
+
+public class Employee extends Person implements Billable {
 
     private int employeeId;
     private String title;
@@ -18,6 +21,11 @@ public class Employee extends Person {
         this.title = title;
         this.salary = salary;
     }
+
+    public Employee() {  // Might need to remove.
+
+    }
+
 
     @Override
     public String getFullName() {
@@ -63,6 +71,20 @@ public class Employee extends Person {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public double getBalanceDue(Map<String, Double> servicesRendered) {
+        double totalCost = 0;
+
+        for (Map.Entry<String, Double> services : servicesRendered.entrySet()){
+            if (services.getKey() == "walking"){
+                totalCost += services.getValue() * 50 / 100;
+            } else{
+                totalCost += services.getValue();
+            }
+
+        } return totalCost;
     }
 
 }
